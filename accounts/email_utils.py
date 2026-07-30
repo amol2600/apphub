@@ -29,9 +29,11 @@ def send_brevo_email(
             }
         ],
         subject=subject,
-        html_content=html_content,
         text_content=text_content,
     )
+
+    if html_content:
+        email.html_content = html_content
 
     try:
         api_instance.send_transac_email(email)
