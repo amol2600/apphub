@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete Transaction
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-danger">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h3 class="mb-1">
+
+                        Delete Transaction
+
+                    </h3>
+
+                    <small>
+
+                        This action cannot be undone.
+
+                    </small>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="alert alert-warning mb-4">
+
+                        <h5 class="alert-heading">
+
+                            Warning!
+
+                        </h5>
+
+                        <p class="mb-0">
+
+                            You are about to permanently delete the following transaction. Please review the details carefully before continuing.
+
+                        </p>
+
+                    </div>
+
+                    <table class="table table-bordered table-striped align-middle">
+
+                        <tbody>
+
+                            <tr>
+
+                                <th width="30%">
+                                    Title
+                                </th>
+
+                                <td>
+                                    {{ transaction.title }}
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <td>
+
+                                    {% if transaction.transaction_type == "Income" %}
+
+                                        <span class="fw-bold text-success">
+
+                                            ₹{{ transaction.amount }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="fw-bold text-danger">
+
+                                            ₹{{ transaction.amount }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+                                    Transaction Type
+                                </th>
+
+                                <td>
+
+                                    {% if transaction.transaction_type == "Income" %}
+
+                                        <span class="badge bg-success">
+
+                                            Income
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+
+                                            Expense
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <td>
+
+                                    {{ transaction.category.name }}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+                                    Transaction Date
+                                </th>
+
+                                <td>
+
+                                    {{ transaction.transaction_date }}
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+                                    Description
+                                </th>
+
+                                <td>
+
+                                    {% if transaction.description %}
+
+                                        {{ transaction.description }}
+
+                                    {% else %}
+
+                                        <span class="text-muted">
+
+                                            No description provided.
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <hr>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a
+                                href="{% url 'transaction_list' %}"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+                                Delete Transaction
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

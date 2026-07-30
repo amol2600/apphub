@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+Email Verified | AppHub
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-success mb-3">
+                        Email Verified
+                    </h2>
+
+                    <div class="alert alert-success">
+                        Your email has been verified successfully.
+                        Your account is now active.
+                    </div>
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn btn-primary"
+                    >
+                        Go to Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

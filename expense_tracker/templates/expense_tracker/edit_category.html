@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Category
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow">
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h3 class="mb-1">
+                            Edit Category
+                        </h3>
+
+                        <small class="text-muted">
+                            Update your category information.
+                        </small>
+
+                    </div>
+
+                    <a
+                        href="{% url 'category_list' %}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Back
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Category Name
+
+                                <span class="text-danger">*</span>
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                value="{{ category.name }}"
+                                placeholder="Enter category name"
+                                maxlength="50"
+                                required
+                            >
+
+                            <div class="form-text">
+
+                                Update the category name as needed.
+
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a
+                                href="{% url 'category_list' %}"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </a>
+
+                            <button
+                                type="reset"
+                                class="btn btn-outline-warning"
+                            >
+                                Reset
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                Update Category
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

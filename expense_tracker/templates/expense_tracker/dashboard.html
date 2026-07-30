@@ -1,0 +1,470 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Expense Tracker Dashboard
+    </h2>
+
+    <!-- Dashboard Cards -->
+
+    <div class="row">
+
+        <!-- Income -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-bg-success h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Total Income
+                    </h5>
+
+                    <h2>
+                        ₹ {{ income }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Expense -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-bg-danger h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Total Expense
+                    </h5>
+
+                    <h2>
+                        ₹ {{ expense }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Balance -->
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-bg-primary h-100">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        Current Balance
+                    </h5>
+
+                    <h2>
+                        ₹ {{ balance }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Monthly Income vs Expense Chart -->
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+                Monthly Income vs Expense
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div style="height:400px;">
+
+                <canvas id="monthlyChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">
+                Expense by Category
+            </h5>
+        </div>
+
+        <div class="card-body text-center">
+
+            <canvas id="categoryPieChart" style="max-width: 350px; max-height: 350px; margin: auto;"></canvas>
+
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+                Recent Transactions
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for transaction in recent_transactions %}
+
+                        <tr>
+
+                            <td>
+                                {{ transaction.title }}
+                            </td>
+
+                            <td>
+                                {{ transaction.category }}
+                            </td>
+
+                            <td>
+
+                                {% if transaction.transaction_type == "Income" %}
+
+                                <span class="badge bg-success">
+                                    Income
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-danger">
+                                    Expense
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{ transaction.amount }}
+
+                            </td>
+
+                            <td>
+
+                                {{ transaction.transaction_date }}
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'edit_transaction' transaction.id %}" class="btn btn-warning btn-sm">
+
+                                    Edit
+
+                                </a>
+
+                                <a href="{% url 'delete_transaction' transaction.id %}" class="btn btn-danger btn-sm">
+
+                                    Delete
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="6" class="text-center">
+
+                                No transactions found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JSON Data -->
+
+{{ monthly_labels|json_script:"monthly-labels" }}
+{{ monthly_income_chart|json_script:"monthly-income" }}
+{{ monthly_expense_chart|json_script:"monthly-expense" }}
+{{ category_labels|json_script:"category-labels" }}
+{{ category_totals|json_script:"category-totals" }}
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const monthlyLabels = JSON.parse(
+        document.getElementById("monthly-labels").textContent
+    );
+
+    const monthlyIncome = JSON.parse(
+        document.getElementById("monthly-income").textContent
+    );
+
+    const monthlyExpense = JSON.parse(
+        document.getElementById("monthly-expense").textContent
+    );
+
+    const ctx = document.getElementById("monthlyChart").getContext("2d");
+
+    const categoryLabels = JSON.parse(
+        document.getElementById(
+            "category-labels"
+        ).textContent
+    );
+
+    const categoryTotals = JSON.parse(
+        document.getElementById(
+            "category-totals"
+        ).textContent
+    );
+
+    new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+            labels: monthlyLabels,
+
+            datasets: [
+
+                {
+
+                    label: "Income",
+
+                    data: monthlyIncome,
+
+                    borderColor: "#198754",
+
+                    backgroundColor: "#198754",
+
+                    borderWidth: 3,
+
+                    pointRadius: 4,
+
+                    pointHoverRadius: 6,
+
+                    tension: 0.3,
+
+                    fill: false
+
+                },
+
+                {
+
+                    label: "Expense",
+
+                    data: monthlyExpense,
+
+                    borderColor: "#dc3545",
+
+                    backgroundColor: "#dc3545",
+
+                    borderWidth: 3,
+
+                    pointRadius: 4,
+
+                    pointHoverRadius: 6,
+
+                    tension: 0.3,
+
+                    fill: false
+
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            interaction: {
+
+                mode: "index",
+
+                intersect: false
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    position: "top"
+
+                },
+
+                title: {
+
+                    display: true,
+
+                    text: "Monthly Income vs Expense"
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        callback: function (value) {
+
+                            return "₹ " + value;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+    const pieCtx = document
+        .getElementById("categoryPieChart")
+        .getContext("2d");
+
+    new Chart(pieCtx, {
+
+        type: "pie",
+
+        data: {
+
+            labels: categoryLabels,
+
+            datasets: [
+                {
+
+                    label: "Expenses",
+
+                    data: categoryTotals,
+
+                    backgroundColor: [
+                        "#0d6efd",
+                        "#198754",
+                        "#dc3545",
+                        "#ffc107",
+                        "#6f42c1",
+                        "#fd7e14",
+                        "#20c997",
+                        "#6610f2",
+                        "#6c757d",
+                        "#0dcaf0",
+                        "#d63384",
+                        "#198754",
+                    ],
+
+                    borderWidth: 1,
+
+                }
+            ]
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: true,
+
+            plugins: {
+
+                title: {
+
+                    display: true,
+
+                    text: "Expense Distribution by Category",
+
+                },
+
+                legend: {
+
+                    position: "bottom",
+
+                },
+
+            },
+
+        },
+
+    });
+
+</script>
+
+{% endblock %}

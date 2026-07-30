@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="py-5 text-center">
+
+    <h1 class="display-4 fw-bold">
+        Welcome to AppHub
+    </h1>
+
+    <p class="lead text-muted">
+
+        A collection of useful web applications built with Django.
+
+        <br>
+
+        Currently featuring the <strong>Expense Tracker</strong>.
+
+    </p>
+
+</div>
+
+<div class="row justify-content-center">
+
+    <!-- Expense Tracker -->
+
+    <div class="col-lg-5 col-md-8">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h3 class="card-title">
+
+                    Expense Tracker
+
+                </h3>
+
+                <p class="card-text">
+
+                    Manage your income and expenses, organize categories, and
+                    visualize your financial data through an interactive dashboard.
+
+                </p>
+
+                <a
+                    href="{% url 'transaction_list' %}"
+                    class="btn btn-primary"
+                >
+                    Open Expense Tracker
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- Future Scope (Will be enabled in future releases) -->
+<!-- ========================================================= -->
+
+<!--
+
+<div class="row g-4 mt-2">
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h3 class="card-title">
+
+                    Password Manager
+
+                </h3>
+
+                <p class="card-text">
+
+                    Securely store and manage your passwords.
+
+                </p>
+
+                <a href="#" class="btn btn-success">
+
+                    Open
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h3 class="card-title">
+
+                    URL Shortener
+
+                </h3>
+
+                <p class="card-text">
+
+                    Convert long URLs into short, shareable links.
+
+                </p>
+
+                <a href="#" class="btn btn-warning">
+
+                    Open
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+-->
+
+{% endblock %}

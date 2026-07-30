@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+Verification Failed | AppHub
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-danger mb-3">
+                        Verification Failed
+                    </h2>
+
+                    <div class="alert alert-danger">
+                        This verification link is invalid or has expired.
+                    </div>
+
+                    <a
+                        href="{% url 'signup' %}"
+                        class="btn btn-primary"
+                    >
+                        Create Account Again
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

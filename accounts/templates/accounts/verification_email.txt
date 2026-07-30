@@ -1,0 +1,12 @@
+Hi {{ user.username }},
+
+Thank you for creating your AppHub account.
+
+Please verify your email by clicking the link below:
+
+{{ verification_link }}
+
+If you did not create this account, you can safely ignore this email.
+
+Thanks,
+AppHub Team
