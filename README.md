@@ -1,26 +1,26 @@
 # AppHub - Expense Tracker
 
-A modern Expense Tracker built with **Django** and **PostgreSQL** that helps users manage their personal finances with secure authentication, dashboards, charts, filtering, and printing support.
+A modern Expense Tracker built with **Django** and **PostgreSQL** that helps users manage their personal finances with secure authentication, dashboards, charts, filtering, and print support.
 
 > **Status:** Production Ready (Expense Tracker Module)
 
 ---
 
-## Features
+# Features
 
-### Authentication
+## Authentication
 
 - User Registration
-- Email Verification
+- Email Verification (Brevo API)
 - Secure Login & Logout
 - Forgot Password
-- Password Reset via Email
+- Password Reset via Email (Brevo API)
 - Django Password Validation
 - User-specific Data Isolation
 
 ---
 
-### Expense Management
+## Expense Management
 
 - Add Transactions
 - Edit Transactions
@@ -32,7 +32,7 @@ A modern Expense Tracker built with **Django** and **PostgreSQL** that helps use
 
 ---
 
-### Dashboard
+## Dashboard
 
 - Total Income
 - Total Expenses
@@ -41,7 +41,7 @@ A modern Expense Tracker built with **Django** and **PostgreSQL** that helps use
 
 ---
 
-### Search & Filters
+## Search & Filters
 
 - Search Transactions
 - Filter by Category
@@ -49,7 +49,7 @@ A modern Expense Tracker built with **Django** and **PostgreSQL** that helps use
 
 ---
 
-### Printing
+## Printing
 
 - Print-Friendly Transaction List
 - Automatic Removal of Navigation and Action Buttons
@@ -57,47 +57,51 @@ A modern Expense Tracker built with **Django** and **PostgreSQL** that helps use
 
 ---
 
-### Security
+## Security
 
-- Password Validation
 - Email Verification
+- Password Reset Tokens
+- Password Validation
 - CSRF Protection
 - Session Authentication
 - User Data Isolation
+- Secure Production Configuration
 
 ---
 
-## Tech Stack
+# Tech Stack
 
-### Backend
+## Backend
 
 - Django 6
-- Python
+- Python 3
 
-### Database
+## Database
 
-- PostgreSQL (NeonDB)
+- PostgreSQL (Neon)
 
-### Frontend
+## Frontend
 
 - HTML5
 - CSS3
 - Bootstrap 5
 - JavaScript
 
-### Email
+## Email Service
 
-- Gmail SMTP
+- Brevo Transactional Email API
 
-### Deployment
+## Deployment
 
 - Render
+- Gunicorn
+- WhiteNoise
 
 ---
 
-## Project Structure
+# Project Structure
 
-```
+```text
 accounts/
 apphub/
 expense_tracker/
@@ -110,18 +114,18 @@ requirements.txt
 
 ---
 
-## Installation
+# Installation
 
 Clone the repository
 
 ```bash
-https://github.com/amol2600/apphub.git
+git clone https://github.com/amol2600/apphub.git
 ```
 
 Go into the project
 
 ```bash
-cd <repository-name>
+cd apphub
 ```
 
 Create a virtual environment
@@ -130,21 +134,21 @@ Create a virtual environment
 python -m venv .venv
 ```
 
-Activate it
+Activate the virtual environment
 
-Windows
+### Windows
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Linux/macOS
+### Linux / macOS
 
 ```bash
 source .venv/bin/activate
 ```
 
-Install dependencies
+Install the dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -152,16 +156,16 @@ pip install -r requirements.txt
 
 ---
 
-## Environment Variables
+# Environment Variables
 
 Create a `.env` file in the project root.
-
-Example:
 
 ```env
 SECRET_KEY=your_secret_key
 
-DEBUG=True
+# Local Development=True
+# Production=False
+DEBUG=False
 
 DB_NAME=your_database_name
 DB_USER=your_database_user
@@ -169,23 +173,16 @@ DB_PASSWORD=your_database_password
 DB_HOST=your_database_host
 DB_PORT=5432
 
-EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_USE_SSL=False
-
-EMAIL_HOST_USER=your_email@gmail.com
-EMAIL_HOST_PASSWORD=your_app_password
-
-DEFAULT_FROM_EMAIL=your_email@gmail.com
+BREVO_API_KEY=your_brevo_api_key
+BREVO_SENDER_EMAIL=your_verified_sender@example.com
+BREVO_SENDER_NAME=AppHub
 ```
 
 ---
 
-## Database
+# Database
 
-Run migrations
+Apply migrations
 
 ```bash
 python manage.py migrate
@@ -197,7 +194,7 @@ Create a superuser
 python manage.py createsuperuser
 ```
 
-Start the server
+Run the development server
 
 ```bash
 python manage.py runserver
@@ -205,17 +202,18 @@ python manage.py runserver
 
 ---
 
-## Deployment
+# Deployment
 
-This project is configured for deployment on **Render** using:
+This project is configured for production deployment on **Render** using:
 
 - Gunicorn
 - WhiteNoise
-- PostgreSQL (NeonDB)
+- PostgreSQL (Neon)
+- Brevo Transactional Email API
 
 ---
 
-## Future Scope
+# Future Scope
 
 The following modules are planned for future development:
 
@@ -225,7 +223,6 @@ The following modules are planned for future development:
 
 ---
 
-## License
+# License
 
 This project is licensed under the MIT License.
-
