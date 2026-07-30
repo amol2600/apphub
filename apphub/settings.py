@@ -58,8 +58,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "home",
     "expense_tracker",
-    "password_manager",
-    "url_shortener",
     "accounts",
 ]
 
