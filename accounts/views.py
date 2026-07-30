@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMultiAlternatives
+from .email_utils import send_brevo_email
 from django.template.loader import render_to_string
 from django.conf import settings
 
@@ -171,19 +171,12 @@ def signup(request):
             email_context,
         )
 
-        email = EmailMultiAlternatives(
+        send_brevo_email(
             subject=subject,
-            body=text_content,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[user.email],
+            text_content=text_content,
+            html_content=html_content,
+            recipient_email=user.email,
         )
-
-        email.attach_alternative(
-            html_content,
-            "text/html",
-        )
-
-        email.send()
 
         messages.success(
             request,
