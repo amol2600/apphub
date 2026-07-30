@@ -225,21 +225,6 @@ The following modules are planned for future development:
 
 ---
 
-## Screenshots
-
-Add screenshots here after deployment.
-
-Example:
-
-- Login Page
-- Dashboard
-- Transactions
-- Categories
-- Charts
-- Print View
-
----
-
 ## License
 
 This project is licensed under the MIT License.
